@@ -1,0 +1,29 @@
+from typing import Any
+from typing import cast
+
+import pytest
+
+from torchio.data import PatchSampler
+
+from ...utils import TorchioTestCase
+
+
+class TestPatchSampler(TorchioTestCase):
+    """Tests for `PatchSampler` class."""
+
+    def test_bad_patch_size(self):
+        with pytest.raises(ValueError):
+            PatchSampler(0)
+        with pytest.raises(ValueError):
+            PatchSampler(-1)
+        with pytest.raises(ValueError):
+            PatchSampler(cast(Any, 1.5))
+
+    def test_extract_patch(self):
+        PatchSampler(1).extract_patch(self.sample_subject, (3, 4, 5))
+
+    def test_patch_larger_than_image_raises(self):
+        """Patch size larger than image raises RuntimeError."""
+        sampler = PatchSampler(200)
+        with pytest.raises(RuntimeError, match='larger than image size'):
+            next(sampler(self.sample_subject))

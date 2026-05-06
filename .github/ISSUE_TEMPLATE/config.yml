@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: ❓ Discussions tab
+    url: https://github.com/medtorch/medtorch/discussions/new
+    about: Ask and answer MedTorch-related questions or start a general discussion
